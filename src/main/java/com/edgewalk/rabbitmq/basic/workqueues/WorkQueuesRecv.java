@@ -13,7 +13,7 @@ public class WorkQueuesRecv {
         // 配置连接工厂
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(host);
-        // 需要在管理后台增加一个hry帐号
+        // 使用管理后台默认guest帐号
         factory.setUsername(userName);
         factory.setPassword(password);
         try {

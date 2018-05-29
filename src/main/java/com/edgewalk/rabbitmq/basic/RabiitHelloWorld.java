@@ -17,7 +17,7 @@ public class RabiitHelloWorld {
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("10.240.80.147");
-        // 需要在管理后台增加一个hry帐号
+        // 使用管理后台默认guest帐号
         factory.setUsername("hry");
         factory.setPassword("hry");
         Connection connection = factory.newConnection();
