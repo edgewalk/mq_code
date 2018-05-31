@@ -1,4 +1,4 @@
-package com.edgewalk.rabbitmq.basic.publishsubscribe;
+package com.edgewalk.rabbitmq.basic.fonout;
 
 import com.rabbitmq.client.*;
 
@@ -14,12 +14,12 @@ public class Subscribe {
 		// 使用管理后台默认guest帐号
 		factory.setUsername(userName);
 		factory.setPassword(password);
-		try (
-				// 建立TCP连接
-				Connection connection = factory.newConnection();
-				// 在TCP连接的基础上创建通道
-				Channel channel = connection.createChannel();
-		) {
+		try {
+			//此处不能关闭连接,不然接收不到消息
+			// 建立TCP连接
+			Connection connection = factory.newConnection();
+			// 在TCP连接的基础上创建通道
+			Channel channel = connection.createChannel();
 			// 声明一个fanout交换机
 			channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.FANOUT);
 			// 声明一个临时队列
@@ -31,8 +31,7 @@ public class Subscribe {
 
 			Consumer consumer = new DefaultConsumer(channel) {
 				@Override
-				public void handleDelivery(String consumerTag, Envelope envelope,
-										   AMQP.BasicProperties properties, byte[] body) throws IOException {
+				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
 					String message = new String(body, "UTF-8");
 					System.out.println(" [Subscribe-" + id + "] Received '" + message + "'");
 				}
@@ -42,5 +41,6 @@ public class Subscribe {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//此处不能关闭连接,不然接收不到消息
 	}
 }
